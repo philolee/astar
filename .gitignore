@@ -1,0 +1,11 @@
+*.iml
+*.xml.bak
+
+target
+.idea
+
+# h2 temp db
+*.mv.db
+*.trace.db
+*.diff
+.arcconfig
