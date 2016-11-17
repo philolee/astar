@@ -17,7 +17,7 @@ def get_html(url):
 
 
 def write_lines_to_file(file_name, lines):
-    f = open(file_name, "w")
+    f = open(file_name, "w", encoding='utf-8')
     for line in lines:
         f.write(line + '\n')
     f.close()
