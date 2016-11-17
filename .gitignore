@@ -9,3 +9,4 @@ target
 *.trace.db
 *.diff
 .arcconfig
+__pycache__
