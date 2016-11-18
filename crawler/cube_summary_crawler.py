@@ -1,14 +1,14 @@
 # -*- coding=utf-8
 
-import ioutils
-import sbutils
-import time
-import threading
 import os
+import threading
 
-#DATA_PATH = '/home/liyang/data/cube_summary'
+from util import sbutils
+from util import ioutils
+
+# DATA_PATH = '/home/liyang/data/cube_summary'
 DATA_PATH = '/home/liyang/data/cube_summary_sp'
-#DATA_PATH = 'D:/data/cube_summary'
+# DATA_PATH = 'D:/data/cube_summary'
 ERROR_PATH = 'D:/data/cube_summary_error'
 STEP = 100
 END_POS = 2000000
@@ -30,18 +30,16 @@ def get_last_crawled_cube_id():
 
 
 class Crawler(threading.Thread):
-
     def __init__(self, start_pos, end_pos, step):
         threading.Thread.__init__(self)
         self.start_pos = start_pos
         self.end_pos = end_pos
         self.step = step
 
-
     def run(self):
         for cur in range(self.start_pos, self.end_pos, self.step):
             try:
-                threadname = threading.currentThread().getName()
+                thread_name = threading.currentThread().getName()
                 lines = []
                 sub_start = cur
                 sub_end = sub_start + STEP
@@ -51,13 +49,14 @@ class Crawler(threading.Thread):
                     # cube_id = sbutils.get_cube_id(i)
                     line = sbutils.get_cube_summary(cube_id)
                     lines.append(line)
-                    print(threadname, i, '/', sub_end, ", cube id : ", cube_id, " downloaded.")
+                    print(thread_name, i, '/', sub_end, ", cube id : ", cube_id, " downloaded.")
                     # time.sleep(1)
                 ioutils.write_lines_to_file(file_name, lines)
-                print(threadname, "File saved, ", file_name)
+                print(thread_name, "File saved, ", file_name)
             except Exception as e:
-                print(threadname, "error,", e)
+                print(thread_name, "error,", e)
                 ioutils.write_lines_to_file(file_name + ".err", lines)
+
 
 def main():
     start_cube_id = sbutils.get_cube_start_pos()
@@ -79,4 +78,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
