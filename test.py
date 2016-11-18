@@ -1,11 +1,6 @@
 # -*- coding=utf-8
 
-import urllib
-from urllib.request import urlopen
-import ioutils
 import requests
-import re
-
 
 session = requests.session()
 

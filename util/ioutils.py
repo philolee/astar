@@ -4,6 +4,7 @@ import urllib
 from urllib.request import urlopen
 import zlib
 
+
 def get_html(url):
     send_headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36',
@@ -19,7 +20,7 @@ def get_html(url):
         req = urllib.request.Request(url, headers=send_headers)
         resp = urlopen(req)
         if resp.info().get('Content-Encoding') == 'gzip':
-            html = zlib.decompress(resp.read(), 16+zlib.MAX_WBITS)
+            html = zlib.decompress(resp.read(), 16 + zlib.MAX_WBITS)
             html = html.decode('utf-8')
         else:
             html = resp.read().decode(resp.headers.get_content_charset())
@@ -27,6 +28,12 @@ def get_html(url):
         print('request failed, url:', url, 'error:', e)
         html = ''
     return html
+
+
+def write_line_to_file(file_name, line):
+    f = open(file_name, "w", encoding='utf-8')
+    f.write(line)
+    f.close()
 
 
 def write_lines_to_file(file_name, lines):

@@ -1,5 +1,4 @@
 import datetime
-import json
 import re
 import time
 
@@ -24,7 +23,7 @@ def get_stock_history_data(stock_id, start_time, end_time):
     url = "https://xueqiu.com/stock/forchartk/stocklist.json?symbol=%s&period=1day&type=before&begin=%d&end=%d" % (
         stock_id, start_time, end_time)
     html = ioutils.get_html(url)
-    return json.loads(html)
+    return html
 
 
 def get_cube_id(num):
@@ -33,6 +32,12 @@ def get_cube_id(num):
 
 def get_sp_cube_id(num):
     return 'SP%d' % num
+
+
+def get_stock_name(id):
+    if id > 600000:
+        return 'SH%d' % id
+    return 'SZ%06d' % id
 
 
 def gen_file_name(start, end):
@@ -52,13 +57,7 @@ def get_current_timestamp():
 
 
 def main():
-    stock = 'SH600551'
-    start = 0
-    end = get_current_timestamp()
-    print(start, end)
-
-    stock_history_data = get_stock_history_data(stock, start, end)
-    print(stock_history_data)
+    print(get_stock_name(2202))
 
 
 if __name__ == '__main__':

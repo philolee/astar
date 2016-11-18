@@ -41,7 +41,6 @@ class DataCombiner:
         df = df.drop_duplicates()
         self.holding_data_df = df
 
-
     def __load_data(self, pipelines):
         files = os.listdir(self.path)
         for file in files:
@@ -79,7 +78,7 @@ class DataCombiner:
         if holdings:
             for holding in holdings:
                 new_obj = {}
-                #new_obj['id'] = raw_obj['id']
+                # new_obj['id'] = raw_obj['id']
                 new_obj['name'] = raw_obj['name']
                 new_obj['symbol'] = raw_obj['symbol']
                 new_obj['market'] = raw_obj['market']
@@ -92,14 +91,18 @@ class DataCombiner:
                 new_obj['stock_symbol'] = holding['stock_symbol']
                 data.append(new_obj)
 
-    def __to_format_time(self, timestamp):
-        time_array = time.localtime(float(timestamp) / 1000)
-        return time.strftime("%Y-%m-%d %H:%M:%S", time_array)
+    @staticmethod
+    def __to_format_time(timestamp):
+        try:
+            time_array = time.localtime(float(timestamp) / 1000)
+            return time.strftime("%Y-%m-%d", time_array)
+        except Exception:
+            return ''
 
 
 def draw(df):
     rows = []
-    for i in range(-100, 500, 10):
+    for i in range(-100, 500, 5):
         row = {}
         row['gain'] = i
         row['count'] = len(df[(df.total_gain > i) & (df.total_gain <= i + 10)].index)
@@ -113,11 +116,13 @@ def draw(df):
 
 
 def main():
-    combiner = DataCombiner('/home/liyang/data/cube_summary_sp')
+    path = 'D:/data/'
+    combiner = DataCombiner(path + '/cube_summary_sp')
     df = combiner.holding_data_df
-    df.to_csv('/home/liyang/data/holding_data.csv')
+    df.to_csv(path + '/holding_data.csv')
     df = combiner.meta_data_df
-    df.to_csv('/home/liyang/data/meta_data.csv')
+    df.to_csv(path + '/meta_data.csv')
+
 
 if __name__ == '__main__':
     main()
