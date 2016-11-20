@@ -27,10 +27,11 @@ class Crawler(threading.Thread):
                     stock_id = sbutils.get_stock_name(i)
                     # stock_id = sbutils.get_stock_id(i)
                     line = sbutils.get_stock_history_data(stock_id, 0, sbutils.get_current_timestamp())
-                    print(thread_name, i, '/', sub_end, ", id : ", stock_id, " downloaded.")
-                    file_name = DATA_PATH + stock_id + '.txt'
-                    ioutils.write_line_to_file(file_name, line)
-                    print(thread_name, "File saved, ", file_name)
+                    if len(line) > 5:
+                        print(thread_name, i, '/', sub_end, ", id : ", stock_id, " downloaded.")
+                        file_name = DATA_PATH + stock_id + '.txt'
+                        ioutils.write_line_to_file(file_name, line)
+                        print(thread_name, "File saved, ", file_name)
             except Exception as e:
                 print(thread_name, "error,", e)
 
@@ -45,8 +46,8 @@ def get_last_crawled_stock_id():
 
 
 def main():
-    start_stock_id = 300000
-    end_stock_id = 301000
+    start_stock_id = 000000
+    end_stock_id = 1000
     print("crawled stock id : %d" % start_stock_id)
 
     threads = []
