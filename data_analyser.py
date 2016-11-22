@@ -1,8 +1,8 @@
 import pandas as pd
 
 
-def main():
-    path = "~"
+if __name__ == '__main__':
+    path = "D:/"
     print('ok')
     meta_df = pd.read_csv(path + '/data/meta_data.csv')
     holding_df = pd.read_csv(path + '/data/holding_data.csv')
@@ -23,7 +23,3 @@ def main():
     segment_df = holding_df.groupby('segment_name')['weight'].sum()
     segment_df = segment_df.sort_values(axis=0, ascending=False)
     segment_df.to_csv(path + '/data/segment_rank_data.csv')
-
-
-if __name__ == '__main__':
-    main()

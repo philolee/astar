@@ -5,8 +5,6 @@ import time
 from util import ioutils
 
 CUBE_URL = 'http://xueqiu.com/p/'
-# CUBE_ID_START_POS = 100000
-CUBE_ID_START_POS = 1000000
 
 
 def get_cube_summary(cube_id):
@@ -42,10 +40,6 @@ def get_stock_name(id):
 
 def gen_file_name(start, end):
     return '%s_%s.txt' % (start, end)
-
-
-def get_cube_start_pos():
-    return CUBE_ID_START_POS
 
 
 def get_timestamp(date):

@@ -119,9 +119,10 @@ def main():
     path = 'D:/data/'
     combiner = DataCombiner(path + '/cube_summary_sp')
     df = combiner.holding_data_df
-    df.to_csv(path + '/holding_data.csv')
+    df.to_csv(path + '/holding_data.csv', encoding='utf-8')
     df = combiner.meta_data_df
-    df.to_csv(path + '/meta_data.csv')
+    df['url'] = combiner.meta_data_df
+    df.to_csv(path + '/meta_data.csv', encoding='utf-8')
 
 
 if __name__ == '__main__':
